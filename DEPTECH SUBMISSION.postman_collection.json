@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "fd11fe27-5590-4b13-9c78-969a847d01d6",
+		"name": "DEPTECH SUBMISSION",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "16046161"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "ADMIN",
+					"item": [
+						{
+							"name": "ADD USER",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"firstName\": \"oliver\",\r\n  \"lastName\": \"sykes\",\r\n  \"email\": \"oliversykes@example.com\",\r\n  \"dateOfBirth\": \"1990-05-15\",\r\n  \"gender\": \"Female\",\r\n  \"password\": \"123123\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{LOCAL_3000}}/user"
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE USER",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"firstName\": \"oliverZ\",\r\n  \"lastName\": \"sykes\",\r\n  \"email\": \"oliversykes@example.com\",\r\n  \"dateOfBirth\": \"1990-05-15\",\r\n  \"gender\": \"Female\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{LOCAL_3000}}/user/10"
+							},
+							"response": []
+						},
+						{
+							"name": "CHANGE PASSWORD",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{ACTIVE_TOKEN}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"current_password\": \"123123\",\r\n    \"new_password\": \"123123\",\r\n    \"re_new_password\": \"123123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{LOCAL_3000}}/user/change-password/1"
+							},
+							"response": []
+						},
+						{
+							"name": "GET ALL USER",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"nadia\",\r\n    \"email\": \"nadia@yopmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{LOCAL_3000}}/user"
+							},
+							"response": []
+						},
+						{
+							"name": "GET USER BY ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{LOCAL_3000}}/user/11"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "EMPLOYEE",
+					"item": [
+						{
+							"name": "ADD EMPLOYEE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nama_depan\": \"oliver\",\r\n  \"nama_belakang\": \"sykes\",\r\n  \"email\": \"oliversykes@example.com\",\r\n  \"no_hp\":\"08221312321\",\r\n  \"jenis_kelamin\": \"Female\",\r\n  \"address\": \"Jl Kaliurang\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{LOCAL_3000}}/pegawai"
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE EMPLOYEE",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nama_depan\": \"Jozzzzzhn\",\r\n  \"nama_belakang\": \"Doe\",\r\n  \"email\": \"john.doe@example.com\",\r\n  \"no_hp\": \"081234567890\",\r\n  \"address\": \"Jl. Example No. 10, Jakarta\",\r\n  \"jenis_kelamin\": \"Male\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{LOCAL_3000}}/pegawai/1"
+							},
+							"response": []
+						},
+						{
+							"name": "GET ALL EMPLOYEE",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"nadia\",\r\n    \"email\": \"nadia@yopmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{LOCAL_3000}}/pegawai"
+							},
+							"response": []
+						},
+						{
+							"name": "GET EMPLOYEE BY ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{LOCAL_3000}}/pegawai/24"
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE EMPLOYEE",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{LOCAL_3000}}/pegawai/1"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CUTI",
+			"item": [
+				{
+					"name": "ADD CUTI",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{ACTIVE_TOKEN}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pegawai_id\": 29,\r\n    \"alasan\": \"Cuti Lebaran\",\r\n    \"mulai_tanggal\": \"2025-05-04\",\r\n    \"akhir_tanggal\": \"2025-05-07\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCAL_3000}}/cuti"
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL CUTI",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{ACTIVE_TOKEN}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{LOCAL_3000}}/cuti"
+					},
+					"response": []
+				},
+				{
+					"name": "DETE DATA CUTI",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{ACTIVE_TOKEN}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"division\": \"Infrastruktur\",\r\n    \"name\": \"WBS & UPG\",\r\n    \"target\": 1,\r\n    \"rkap\":2,\r\n    \"periode\":\"Juuni\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCAL_3000}}/cuti/10"
+					},
+					"response": []
+				},
+				{
+					"name": "GET DATA CUTI BY ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvbmEiLCJkaXZpc2lvbl9pZCI6MiwidXNlcl9pZCI6MSwiZW1haWwiOiJqb25hLmFkaGl0eWFAc21mLWluZG9uZXNpYS5jby5pZCIsImlhdCI6MTcwNTk4MzIwOCwiZXhwIjoxNzA1OTgzMjE4fQ.7ADDIZ9dClKJWqenTubk4egyyRs66hUW25U38jW_Cbs"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{LOCAL_3000}}/cuti/20"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"nadiavarra@yopmail.com\",\r\n    \"password\": \"123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCAL_3000}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "LOGOUT",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{ACTIVE_TOKEN}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": "{{LOCAL_3000}}/auth/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "AUTH CHECK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{ACTIVE_TOKEN}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{LOCAL_3000}}/auth/verify-token"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
