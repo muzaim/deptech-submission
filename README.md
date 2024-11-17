@@ -5,10 +5,21 @@ Muhammad Syafri Surya Muzaim - Fullstack Developer
 ## Setup Database
  Create a MySQL Database on your Database Admin
  ```bash
- you can use the sample_db to restore your Database
+ name your database as deptech_submission
  ```
+ Import Database
+ ```bash
+ you can use the sample_db to restore your Database
+```
  ## Setup Postman
+ Open your postman
+ ```bash
  Import the DEPTECH SUBMISSION POSTMAN COLLECTION into your postman
+ ```
+ Create an environment in postman
+ ```bash
+ create a variable named {{LOCAL_3000}} filled with http://localhost:3000
+ ```
 
 ## Clone the Repository
 
