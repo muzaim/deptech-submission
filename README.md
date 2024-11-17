@@ -2,6 +2,13 @@
 ```bash
 Muhammad Syafri Surya Muzaim - Fullstack Developer
 ```
+## Setup Database
+ Create a MySQL Database on your Database Admin
+ ```bash
+ you can use the sample_db to restore your Database
+ ```
+ ## Setup Postman
+ Import the DEPTECH SUBMISSION POSTMAN COLLECTION into your postman
 
 ## Clone the Repository
 
@@ -10,14 +17,6 @@ Clone the repository using Git:
 ```bash
 git clone https://github.com/muzaim/deptech-submission.git
 ```
-
-## Setup Database
- Create a MySQL Database on your Database Admin
- ```bash
- you can use the sample_db to restore your Database
- ```
- ## Setup Postman
- Import the DEPTECH SUBMISSION POSTMAN COLLECTION into your postman
 
 ## Setup Backend 
 
