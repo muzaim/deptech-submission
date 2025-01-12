@@ -39,7 +39,6 @@ export class Pegawai {
 
   @Column({
     length: 15, // Menggunakan panjang yang sesuai untuk nomor HP
-    unique: true, // Menandakan nomor HP harus unik
   })
   no_hp: string;
 
