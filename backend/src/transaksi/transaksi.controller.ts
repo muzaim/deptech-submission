@@ -42,10 +42,23 @@ export class TransaksiController {
       },
     }),
   )
-  @Post()
   async createWithDetails(
-    @Body() createTransaksiWithDetailsDto: CreateTransaksiWithDetailsDto,
+    @Body() formData: any,
+    @UploadedFile() bukti_transfer: Express.Multer.File,
   ): Promise<Transaksi> {
+    // Parsing `purchase_details` from JSON string
+    const purchaseDetails = JSON.parse(formData.purchase_details);
+
+    // Preparing DTO
+    const createTransaksiWithDetailsDto: CreateTransaksiWithDetailsDto = {
+      ...formData,
+      bukti_transfer: bukti_transfer.filename,
+      purchase_details: purchaseDetails,
+    };
+
+    // Log to debug
+    console.log('DTO:', createTransaksiWithDetailsDto);
+
     return this.transaksiService.createWithDetails(
       createTransaksiWithDetailsDto,
     );

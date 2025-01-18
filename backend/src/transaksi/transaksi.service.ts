@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Transaksi } from './entities/transaksi.entity'; // Import Transaksi Entity
@@ -100,7 +100,6 @@ export class TransaksiService {
           where: { id: transaksiId },
           relations: ['details', 'details.produk'],
         });
-
         return savedTransaksi;
       } catch (error) {
         console.error('Error dalam transaksi:', error);
@@ -112,12 +111,48 @@ export class TransaksiService {
   // dsada
   // Get all transactions
   async findAll(): Promise<Transaksi[]> {
-    return this.transaksiRepository.find();
+    return this.transaksiRepository.find().then((transaksiList) => {
+      // Base URL for your images (make sure this is correct)
+      const baseUrl = `${process.env.BASE_URL}/uploads/`;
+
+      // Map through the result and add the full image URL
+      return transaksiList.map((transaksi) => {
+        // Add the base URL to the image filename
+        transaksi.bukti_transfer = baseUrl + transaksi.bukti_transfer;
+        return transaksi;
+      });
+    });
   }
 
   // Get a single transaction by ID
   async findOne(id: number): Promise<Transaksi> {
-    return this.transaksiRepository.findOne({ where: { id } });
+    // Fetch transaksi with related details and produk
+    const transaksi = await this.transaksiRepository.findOne({
+      where: { id },
+      relations: ['details', 'details.produk'], // Join ke tabel produk melalui details
+    });
+
+    // Jika transaksi tidak ditemukan, lemparkan error
+    if (!transaksi) {
+      throw new NotFoundException(`Transaksi dengan ID ${id} tidak ditemukan`);
+    }
+
+    // Base URL untuk file gambar
+    const baseUrl = `${process.env.BASE_URL}/uploads/`;
+
+    // Tambahkan base URL ke bukti_transfer
+    if (transaksi.bukti_transfer) {
+      transaksi.bukti_transfer = baseUrl + transaksi.bukti_transfer;
+    }
+
+    // Tambahkan base URL ke foto di setiap produk
+    transaksi.details.forEach((detail) => {
+      if (detail.produk && detail.produk.foto) {
+        detail.produk.foto = baseUrl + detail.produk.foto;
+      }
+    });
+
+    return transaksi;
   }
 
   // Update a transaction by ID
