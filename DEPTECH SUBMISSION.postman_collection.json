@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "fd11fe27-5590-4b13-9c78-969a847d01d6",
 		"name": "DEPTECH SUBMISSION",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "16046161"
 	},
 	"item": [
@@ -26,7 +26,15 @@
 										}
 									}
 								},
-								"url": "{{LOCAL_3000}}/user"
+								"url": {
+									"raw": "{{LOCAL_3000}}/user",
+									"host": [
+										"{{LOCAL_3000}}"
+									],
+									"path": [
+										"user"
+									]
+								}
 							},
 							"response": []
 						},
@@ -44,7 +52,16 @@
 										}
 									}
 								},
-								"url": "{{LOCAL_3000}}/user/10"
+								"url": {
+									"raw": "{{LOCAL_3000}}/user/10",
+									"host": [
+										"{{LOCAL_3000}}"
+									],
+									"path": [
+										"user",
+										"10"
+									]
+								}
 							},
 							"response": []
 						},
@@ -53,9 +70,13 @@
 							"request": {
 								"auth": {
 									"type": "bearer",
-									"bearer": {
-										"token": "{{ACTIVE_TOKEN}}"
-									}
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACTIVE_TOKEN}}",
+											"type": "string"
+										}
+									]
 								},
 								"method": "POST",
 								"header": [],
@@ -68,7 +89,17 @@
 										}
 									}
 								},
-								"url": "{{LOCAL_3000}}/user/change-password/1"
+								"url": {
+									"raw": "{{LOCAL_3000}}/user/change-password/1",
+									"host": [
+										"{{LOCAL_3000}}"
+									],
+									"path": [
+										"user",
+										"change-password",
+										"1"
+									]
+								}
 							},
 							"response": []
 						},
@@ -89,7 +120,15 @@
 										}
 									}
 								},
-								"url": "{{LOCAL_3000}}/user"
+								"url": {
+									"raw": "{{LOCAL_3000}}/user",
+									"host": [
+										"{{LOCAL_3000}}"
+									],
+									"path": [
+										"user"
+									]
+								}
 							},
 							"response": []
 						},
@@ -98,7 +137,16 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{LOCAL_3000}}/user/11"
+								"url": {
+									"raw": "{{LOCAL_3000}}/user/11",
+									"host": [
+										"{{LOCAL_3000}}"
+									],
+									"path": [
+										"user",
+										"11"
+									]
+								}
 							},
 							"response": []
 						}
@@ -121,7 +169,15 @@
 										}
 									}
 								},
-								"url": "{{LOCAL_3000}}/pegawai"
+								"url": {
+									"raw": "{{LOCAL_3000}}/pegawai",
+									"host": [
+										"{{LOCAL_3000}}"
+									],
+									"path": [
+										"pegawai"
+									]
+								}
 							},
 							"response": []
 						},
@@ -139,7 +195,16 @@
 										}
 									}
 								},
-								"url": "{{LOCAL_3000}}/pegawai/1"
+								"url": {
+									"raw": "{{LOCAL_3000}}/pegawai/1",
+									"host": [
+										"{{LOCAL_3000}}"
+									],
+									"path": [
+										"pegawai",
+										"1"
+									]
+								}
 							},
 							"response": []
 						},
@@ -160,7 +225,15 @@
 										}
 									}
 								},
-								"url": "{{LOCAL_3000}}/pegawai"
+								"url": {
+									"raw": "{{LOCAL_3000}}/pegawai",
+									"host": [
+										"{{LOCAL_3000}}"
+									],
+									"path": [
+										"pegawai"
+									]
+								}
 							},
 							"response": []
 						},
@@ -169,7 +242,16 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{LOCAL_3000}}/pegawai/24"
+								"url": {
+									"raw": "{{LOCAL_3000}}/pegawai/24",
+									"host": [
+										"{{LOCAL_3000}}"
+									],
+									"path": [
+										"pegawai",
+										"24"
+									]
+								}
 							},
 							"response": []
 						},
@@ -178,7 +260,16 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
-								"url": "{{LOCAL_3000}}/pegawai/1"
+								"url": {
+									"raw": "{{LOCAL_3000}}/pegawai/1",
+									"host": [
+										"{{LOCAL_3000}}"
+									],
+									"path": [
+										"pegawai",
+										"1"
+									]
+								}
 							},
 							"response": []
 						}
@@ -194,9 +285,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "{{ACTIVE_TOKEN}}"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
@@ -209,7 +304,15 @@
 								}
 							}
 						},
-						"url": "{{LOCAL_3000}}/cuti"
+						"url": {
+							"raw": "{{LOCAL_3000}}/cuti",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"cuti"
+							]
+						}
 					},
 					"response": []
 				},
@@ -218,13 +321,25 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "{{ACTIVE_TOKEN}}"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
-						"url": "{{LOCAL_3000}}/cuti"
+						"url": {
+							"raw": "{{LOCAL_3000}}/cuti",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"cuti"
+							]
+						}
 					},
 					"response": []
 				},
@@ -233,9 +348,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "{{ACTIVE_TOKEN}}"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "DELETE",
 						"header": [],
@@ -248,7 +367,16 @@
 								}
 							}
 						},
-						"url": "{{LOCAL_3000}}/cuti/10"
+						"url": {
+							"raw": "{{LOCAL_3000}}/cuti/10",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"cuti",
+								"10"
+							]
+						}
 					},
 					"response": []
 				},
@@ -257,13 +385,368 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvbmEiLCJkaXZpc2lvbl9pZCI6MiwidXNlcl9pZCI6MSwiZW1haWwiOiJqb25hLmFkaGl0eWFAc21mLWluZG9uZXNpYS5jby5pZCIsImlhdCI6MTcwNTk4MzIwOCwiZXhwIjoxNzA1OTgzMjE4fQ.7ADDIZ9dClKJWqenTubk4egyyRs66hUW25U38jW_Cbs"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvbmEiLCJkaXZpc2lvbl9pZCI6MiwidXNlcl9pZCI6MSwiZW1haWwiOiJqb25hLmFkaGl0eWFAc21mLWluZG9uZXNpYS5jby5pZCIsImlhdCI6MTcwNTk4MzIwOCwiZXhwIjoxNzA1OTgzMjE4fQ.7ADDIZ9dClKJWqenTubk4egyyRs66hUW25U38jW_Cbs",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
-						"url": "{{LOCAL_3000}}/cuti/20"
+						"url": {
+							"raw": "{{LOCAL_3000}}/cuti/20",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"cuti",
+								"20"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRODUK",
+			"item": [
+				{
+					"name": "ADD PRODUK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "Baju ramzi",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "10000",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/Users/syafrisurya/Downloads/patrick-fore-iOiaqY7eZsY-unsplash.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCAL_3000}}/produk",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"produk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE PRODUK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "Baju ramzi",
+									"type": "text"
+								},
+								{
+									"key": "harga",
+									"value": "10000222",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/Users/syafrisurya/Downloads/Foto-Baju-Batik-Jawa.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCAL_3000}}/produk/2",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"produk",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL PRODUK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_3000}}/produk",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"produk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL PRODUK IMAGE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_3000}}/uploads/produk-1736575877856-756885716.png",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"uploads",
+								"produk-1736575877856-756885716.png"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DETE DATA PRODUK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"division\": \"Infrastruktur\",\r\n    \"name\": \"WBS & UPG\",\r\n    \"target\": 1,\r\n    \"rkap\":2,\r\n    \"periode\":\"Juuni\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_3000}}/produk/3",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"produk",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET DATA PRODUK BY ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvbmEiLCJkaXZpc2lvbl9pZCI6MiwidXNlcl9pZCI6MSwiZW1haWwiOiJqb25hLmFkaGl0eWFAc21mLWluZG9uZXNpYS5jby5pZCIsImlhdCI6MTcwNTk4MzIwOCwiZXhwIjoxNzA1OTgzMjE4fQ.7ADDIZ9dClKJWqenTubk4egyyRs66hUW25U38jW_Cbs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_3000}}/produk/2",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"produk",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TRANSAKSI",
+			"item": [
+				{
+					"name": "ADD TRANSAKSI",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama_pembeli",
+									"value": "Dandi anto",
+									"type": "text"
+								},
+								{
+									"key": "alamat",
+									"value": "Jl ahmad yani",
+									"type": "text"
+								},
+								{
+									"key": "kode_pos",
+									"value": "YK0231",
+									"type": "text"
+								},
+								{
+									"key": "metode_pengiriman",
+									"value": "J&T Express",
+									"type": "text"
+								},
+								{
+									"key": "bukti_transfer",
+									"type": "file",
+									"src": "/Users/syafrisurya/Downloads/272.1.jpg"
+								},
+								{
+									"key": "purchase_details",
+									"value": "[\n  { \"produk_id\": 5, \"quantity\": 2 },\n  { \"produk_id\": 6, \"quantity\": 3 }\n]\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCAL_3000}}/transaksi",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"transaksi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL TRANSAKSI",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_3000}}/transaksi",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"transaksi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET DATA TRANSAKSI BY ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvbmEiLCJkaXZpc2lvbl9pZCI6MiwidXNlcl9pZCI6MSwiZW1haWwiOiJqb25hLmFkaGl0eWFAc21mLWluZG9uZXNpYS5jby5pZCIsImlhdCI6MTcwNTk4MzIwOCwiZXhwIjoxNzA1OTgzMjE4fQ.7ADDIZ9dClKJWqenTubk4egyyRs66hUW25U38jW_Cbs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_3000}}/transaksi/127",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"transaksi",
+								"127"
+							]
+						}
 					},
 					"response": []
 				}
@@ -279,14 +762,23 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"nadiavarra@yopmail.com\",\r\n    \"password\": \"123123\"\r\n}",
+							"raw": "{\r\n    \"email\": \"admin1@yopmail.com\",\r\n    \"password\": \"123123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{LOCAL_3000}}/auth/login"
+						"url": {
+							"raw": "{{LOCAL_3000}}/auth/login",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -295,13 +787,26 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "{{ACTIVE_TOKEN}}"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
-						"url": "{{LOCAL_3000}}/auth/logout"
+						"url": {
+							"raw": "{{LOCAL_3000}}/auth/logout",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
 					},
 					"response": []
 				},
@@ -310,13 +815,26 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "{{ACTIVE_TOKEN}}"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACTIVE_TOKEN}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
-						"url": "{{LOCAL_3000}}/auth/verify-token"
+						"url": {
+							"raw": "{{LOCAL_3000}}/auth/verify-token",
+							"host": [
+								"{{LOCAL_3000}}"
+							],
+							"path": [
+								"auth",
+								"verify-token"
+							]
+						}
 					},
 					"response": []
 				}
