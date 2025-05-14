@@ -79,27 +79,27 @@ export const editProduk = async (
   produkData: {
     nama: string;
     harga: string;
-    foto: File | string; // Use File type for foto
+    foto?: File | string | null; // Use File type for foto
   },
 ): Promise<any> => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Create a new FormData object
-  const formData = new FormData();
+  const formData: any = new FormData();
 
   // Append form fields to FormData
   formData.append("nama", produkData.nama);
   formData.append("harga", produkData.harga);
 
   // Append the foto field, handle both File and string case
-  if (produkData.foto instanceof File) {
+  if (produkData.foto instanceof File && produkData.foto !== null) {
     formData.append("foto", produkData.foto);
   } else {
     formData.append("foto", produkData.foto); // If foto is a string (file name)
   }
 
   try {
-    const response = await axios.put(`${apiUrl}/produk/${id}`, formData, {
+    const response = await axios.post(`${apiUrl}/produk/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Specify that the request contains a file
       },

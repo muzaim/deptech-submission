@@ -12,6 +12,7 @@ import {
   HttpException,
   HttpStatus,
   UploadedFile,
+  HttpCode,
 } from '@nestjs/common';
 import { CreateProdukDto } from './dto/create-produk.dto';
 import { ProdukService } from './produk.service';
@@ -69,6 +70,8 @@ export class ProdukController {
   }
 
   @Post(':id')
+  @HttpCode(HttpStatus.OK)
+
 @UseInterceptors(
   FileInterceptor('foto', {
     storage: diskStorage({
@@ -94,6 +97,7 @@ export class ProdukController {
     },
   }),
 )
+
 async update(
   @Param('id') id: number,
   @Body() updateProdukDto: CreateProdukDto,
@@ -109,14 +113,12 @@ async update(
   // Prepare the update data
   const updatedData = { ...updateProdukDto };
 
+
   // If a new foto is uploaded, update the foto field
   if (foto) {
     updatedData.foto = foto.filename; // Update the foto with the new file
     // Optionally, delete the old file if necessary (e.g., using fs.unlink)
-  } else {
-    // Keep the existing foto if no new file is uploaded
-    updatedData.foto = existingProduk.foto;
-  }
+  } 
 
   // Call the service to update the product
   return this.produkService.update(id, updatedData);
@@ -131,10 +133,9 @@ async update(
 
   // Endpoint untuk mengambil cuti berdasarkan ID
   @Get(':id')
-  async findById(id: number): Promise<Produk> {
-    // Melakukan query untuk mencari Cuti berdasarkan ID dan melakukan LEFT JOIN dengan Pegawai
-    const cuti = await this.produkService.findOne(id);
-    return cuti;
+  async findById(@Param('id') id: number): Promise<Produk> {
+    const result = await this.produkService.findOne(id);
+    return result;
   }
 
   @Delete(':id')

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import TableProduk from "@/components/Tables/TableProduk";
-const CutiPages = () => {
+const ProductPages = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -29,4 +29,4 @@ const CutiPages = () => {
   );
 };
 
-export default CutiPages;
+export default ProductPages;

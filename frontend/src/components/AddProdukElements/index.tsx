@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { addProduk } from "@/app/api/produk";
+import ImageUploader from "../ImageUploader";
 
 const validationSchema = z.object({
   namaProduk: z.string().min(1, { message: "Nama Produk is required" }),
@@ -41,6 +42,7 @@ const AddProdukElements = () => {
   const [pegawaiList, setPegawaiList] = useState<Pegawai[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   useEffect(() => {
     flatpickr(".form-datepicker", {
@@ -110,6 +112,8 @@ const AddProdukElements = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     console.log(file);
+    if (file === null) return;
+    setPreviewImage(URL.createObjectURL(file));
     setSelectedFile(file); // Store the selected file
   };
 
@@ -133,7 +137,7 @@ const AddProdukElements = () => {
     <>
       <Breadcrumb pageName="Tambah Data Produk" />
 
-      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
         <div className="flex flex-col gap-9">
           {/* <!-- Input Fields --> */}
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -175,14 +179,15 @@ const AddProdukElements = () => {
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                     Gambar Produk
                   </label>
-                  <input
-                    type="file"
-                    onChange={handleFileChange} // Handle file selection manually
-                    className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:px-5 file:py-3 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                  />
-                  {errors.foto && (
-                    <span className="text-red-500">{errors.foto.message}</span>
-                  )}
+                  <ImageUploader
+                    error={errors.foto?.message}
+                    onFileSelect={(file) => {
+                      setSelectedFile(file); // Kirim ke form
+                    }}
+                    />
+                    {errors.foto && (
+                      <span className="text-red-500">{errors.foto.message}</span>
+                    )}
                 </div>
 
                 <div className="flex justify-end gap-2.5">

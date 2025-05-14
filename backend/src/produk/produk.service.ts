@@ -19,7 +19,7 @@ export class ProdukService {
       // Map through the result and add the full image URL
       return produkList.map((produk) => {
         // Add the base URL to the image filename
-        produk.foto = baseUrl + produk.foto;
+        produk.foto = produk.foto && baseUrl + produk.foto;
         return produk;
       });
     });
@@ -31,7 +31,7 @@ export class ProdukService {
       const baseUrl = `${process.env.BASE_URL}/uploads/`;
 
       // If the product exists, add the full image URL
-      if (produk) {
+      if (produk.foto) {
         produk.foto = baseUrl + produk.foto;
       }
 
@@ -52,6 +52,14 @@ export class ProdukService {
 
     if (!existingProduk) {
       throw new Error('Product not found');
+    }
+
+    if (
+      updateProdukDto.foto === null ||
+      updateProdukDto.foto === undefined ||
+      updateProdukDto.foto === 'null'
+    ) {
+      delete updateProdukDto.foto;
     }
 
     // Update the fields that are provided in the DTO

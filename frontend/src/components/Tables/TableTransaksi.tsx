@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { deleteProduk, fetchProduk, Produk } from "../../app/api/produk";
 import { fetchTransaksi, Transaksi } from "../../app/api/transaksi";
-import Swal from "sweetalert2";
-import Image from "next/image";
+import Link from "next/link";
+import moment from "moment";
 
 const TableTransaksi = () => {
   const [transaksiList, setTransaksiList] = useState<Transaksi[]>([]);
@@ -63,7 +62,9 @@ const TableTransaksi = () => {
             <div className="col-span-2 flex items-center">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <div className="flex items-center justify-center gap-1">
-                  <span className="text-sm text-black dark:text-white">
+                  <span
+                    className={`rounded px-2 py-1 text-sm text-black dark:text-white`}
+                  >
                     {transaksi.nomor_transaksi}
                   </span>
                 </div>
@@ -73,7 +74,7 @@ const TableTransaksi = () => {
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <div className="flex items-center justify-center gap-1">
                   <span className="text-sm text-black dark:text-white">
-                    {transaksi.tanggal}
+                    {moment(transaksi.tanggal).format("DD MMMM YYYY, HH:mm")}
                   </span>
                 </div>
               </div>
