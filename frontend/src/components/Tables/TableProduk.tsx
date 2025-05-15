@@ -80,14 +80,17 @@ const TableProduk = () => {
           Tambah Data Produk
         </Link>
       </div>
-      <div className="grid grid-cols-7 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-        <div className="col-span-2 flex items-center">
+      <div className="grid grid-cols-12 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-12 md:px-6 2xl:px-7.5">
+        <div className="col-span-3 flex items-center">
           <p className="font-medium">Nama Produk</p>
         </div>
-        <div className="col-span-3 hidden items-center justify-center sm:flex">
+        <div className="col-span-4 hidden items-center justify-center sm:flex">
           <p className="font-medium">Foto Produk</p>
         </div>
-        <div className="col-span-1 hidden items-center sm:flex">
+        <div className="col-span-2 hidden items-center sm:flex">
+          <p className="font-medium">Stock</p>
+        </div>
+        <div className="col-span-2 hidden items-center sm:flex">
           <p className="font-medium">Harga</p>
         </div>
 
@@ -102,10 +105,10 @@ const TableProduk = () => {
       ) : (
         produkList?.map((produk, key) => (
           <div
-            className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+            className="grid grid-cols-12 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-12 md:px-6 2xl:px-7.5"
             key={key}
           >
-            <div className="col-span-2 flex items-center">
+            <div className="col-span-3 flex items-center">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <div className="flex items-center justify-center gap-1">
                   <span className="text-sm text-black dark:text-white">
@@ -114,7 +117,7 @@ const TableProduk = () => {
                 </div>
               </div>
             </div>
-            <div className="col-span-3 flex items-center justify-center">
+            <div className="col-span-4 flex items-center justify-center">
               {produk.foto && (
                 <Image
                   width={100}
@@ -130,7 +133,13 @@ const TableProduk = () => {
               )}
             </div>
 
-            <div className="col-span-1 flex items-center">
+            <div className="col-span-2 flex items-center">
+              <p className="text-sm text-black dark:text-white">
+                {produk.stock}
+              </p>
+            </div>
+
+            <div className="col-span-2 flex items-center">
               <p className="text-sm text-black dark:text-white">
                 {formatHarga(Number(produk.harga))}
               </p>

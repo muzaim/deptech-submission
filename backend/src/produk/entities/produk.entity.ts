@@ -15,6 +15,9 @@ export class Produk {
   @Column()
   nama: string;
 
+  @Column({nullable: true})
+  stock: number;
+
   @Column('decimal')
   harga: number;
 

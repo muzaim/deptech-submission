@@ -15,11 +15,13 @@ import { addProduk } from "@/app/api/produk";
 import ImageUploader from "../ImageUploader";
 
 const validationSchema = z.object({
+  stock: z.string().min(1, { message: "Stock is required" }),
   namaProduk: z.string().min(1, { message: "Nama Produk is required" }),
   harga: z.string().min(1, { message: "Harga is required" }),
 });
 
 type FormData = {
+  stock: string;
   namaProduk: string;
   harga: number;
   foto: File | null;
@@ -79,6 +81,7 @@ const AddProdukElements = () => {
 
         const result = await addProduk({
           nama: String(data.namaProduk),
+          stock: Number(data.stock),
           harga: data.harga,
           foto: selectedFile, // Ensure the correct file is passed here
         });
@@ -157,6 +160,21 @@ const AddProdukElements = () => {
                     <span className="text-red-500">
                       {errors.namaProduk.message}
                     </span>
+                  )}
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Stock
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Stock Produk"
+                    {...register("stock")}
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                  {errors.stock && (
+                    <span className="text-red-500">{errors.stock.message}</span>
                   )}
                 </div>
 

@@ -4,6 +4,7 @@ import { Pegawai } from "./pegawai";
 export type Produk = {
   id: number;
   nama: string;
+  stock: number;
   harga: string;
   foto: string;
 };
@@ -42,17 +43,20 @@ export const fetchProdukById = async (id: number): Promise<Produk[]> => {
 
 export const addProduk = async (produkData: {
   nama: string;
+  stock: number;
   harga: number;
   foto: File | null;
 }): Promise<any> => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Membuat objek FormData
-  const formData = new FormData();
+  const formData : any = new FormData();
 
   // Menambahkan data ke FormData
   formData.append("nama", produkData.nama);
   formData.append("harga", produkData.harga.toString()); // Harga harus string
+  formData.append("stock", produkData.stock);
+
   if (produkData.foto) {
     formData.append("foto", produkData.foto);
   }
@@ -78,6 +82,7 @@ export const editProduk = async (
   id: number,
   produkData: {
     nama: string;
+    stock: number;
     harga: string;
     foto?: File | string | null; // Use File type for foto
   },
@@ -90,6 +95,7 @@ export const editProduk = async (
   // Append form fields to FormData
   formData.append("nama", produkData.nama);
   formData.append("harga", produkData.harga);
+  formData.append("stock", produkData.stock);
 
   // Append the foto field, handle both File and string case
   if (produkData.foto instanceof File && produkData.foto !== null) {
