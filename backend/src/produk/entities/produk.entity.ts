@@ -5,7 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { ProdukFotos } from './produk_fotos.entity';
 
 @Entity('produk')
 export class Produk {
@@ -15,6 +17,9 @@ export class Produk {
   @Column()
   nama: string;
 
+  @Column('text')
+  desc: string;
+
   @Column({nullable: true})
   stock: number;
 
@@ -23,6 +28,9 @@ export class Produk {
 
   @Column()
   foto: string;
+
+  @OneToMany(() => ProdukFotos, (item) => item.produk)
+  fotos: ProdukFotos[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

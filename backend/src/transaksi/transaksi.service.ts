@@ -148,7 +148,7 @@ export class TransaksiService {
     // Tambahkan base URL ke foto di setiap produk
     transaksi.details.forEach((detail) => {
       if (detail.produk && detail.produk.foto) {
-        detail.produk.foto = baseUrl + detail.produk.foto;
+        detail.produk.foto = baseUrl + detail.produk.foto[0];
       }
     });
 

@@ -13,11 +13,12 @@ import {
   HttpStatus,
   UploadedFile,
   HttpCode,
+  UploadedFiles,
 } from '@nestjs/common';
 import { CreateProdukDto } from './dto/create-produk.dto';
 import { ProdukService } from './produk.service';
 import { Produk } from './entities/produk.entity';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 
@@ -28,9 +29,9 @@ export class ProdukController {
   // Endpoint untuk menambah cuti
   @Post()
   @UseInterceptors(
-    FileInterceptor('foto', {
+    FilesInterceptor('fotos', 100, {
       storage: diskStorage({
-        destination: './uploads', // Folder tempat menyimpan file
+        destination: './uploads',
         filename: (req, file, callback) => {
           const uniqueSuffix =
             Date.now() + '-' + Math.round(Math.random() * 1e9);
@@ -54,31 +55,25 @@ export class ProdukController {
   )
   async create(
     @Body() createProdukDto: CreateProdukDto,
-    @UploadedFile() foto: Express.Multer.File,
+    @UploadedFiles() fotos: Express.Multer.File[],
   ) {
-    if (!foto) {
-      throw new HttpException('Foto is required', HttpStatus.BAD_REQUEST);
+    if (!fotos || fotos.length === 0) {
+      throw new HttpException(
+        'Minimal 1 foto is required',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
-    // Tambahkan path foto ke DTO
-    const produkData = {
-      ...createProdukDto,
-      foto: foto.filename, // Simpan nama file di database
-    };
-
-    return this.produkService.create(produkData);
+    return this.produkService.create(createProdukDto, fotos);
   }
 
-  @Post(':id')
-  @HttpCode(HttpStatus.OK)
-
+ @Put(':id')
 @UseInterceptors(
-  FileInterceptor('foto', {
+  FilesInterceptor('fotos', 100, {
     storage: diskStorage({
-      destination: './uploads', // Folder tempat menyimpan file
+      destination: './uploads',
       filename: (req, file, callback) => {
-        const uniqueSuffix =
-          Date.now() + '-' + Math.round(Math.random() * 1e9);
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
         const ext = extname(file.originalname);
         callback(null, `produk-${uniqueSuffix}${ext}`);
       },
@@ -86,10 +81,7 @@ export class ProdukController {
     fileFilter: (req, file, callback) => {
       if (!file.mimetype.match(/\/(jpg|jpeg|png)$/)) {
         return callback(
-          new HttpException(
-            'Only image files are allowed!',
-            HttpStatus.BAD_REQUEST,
-          ),
+          new HttpException('Only image files are allowed!', HttpStatus.BAD_REQUEST),
           false,
         );
       }
@@ -97,31 +89,21 @@ export class ProdukController {
     },
   }),
 )
-
 async update(
   @Param('id') id: number,
-  @Body() updateProdukDto: CreateProdukDto,
-  @UploadedFile() foto: Express.Multer.File,
+  @Body() updateProdukDto: any,
+  @UploadedFiles() fotos: Express.Multer.File[],
 ) {
-  // Find the existing product by ID
-  const existingProduk = await this.produkService.findOne(id);
+  const { existingFileIds } = updateProdukDto;
 
-  if (!existingProduk) {
-    throw new HttpException('Produk not found', HttpStatus.NOT_FOUND);
+  let parsedIds: number[] = [];
+  if (typeof existingFileIds === 'string') {
+    parsedIds = JSON.parse(existingFileIds); // dikirim dari form-data sebagai string
+  } else if (Array.isArray(existingFileIds)) {
+    parsedIds = existingFileIds;
   }
 
-  // Prepare the update data
-  const updatedData = { ...updateProdukDto };
-
-
-  // If a new foto is uploaded, update the foto field
-  if (foto) {
-    updatedData.foto = foto.filename; // Update the foto with the new file
-    // Optionally, delete the old file if necessary (e.g., using fs.unlink)
-  } 
-
-  // Call the service to update the product
-  return this.produkService.update(id, updatedData);
+  return this.produkService.update(id, updateProdukDto, fotos, parsedIds);
 }
 
 

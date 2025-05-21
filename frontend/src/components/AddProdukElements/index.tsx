@@ -23,8 +23,12 @@ const validationSchema = z.object({
 type FormData = {
   stock: string;
   namaProduk: string;
+  descProduk: string;
   harga: number;
   foto: File | null;
+  foto2: File | null;
+  foto3: File | null;
+  foto4: File | null;
 };
 
 const AddProdukElements = () => {
@@ -32,6 +36,7 @@ const AddProdukElements = () => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(validationSchema),
@@ -41,9 +46,10 @@ const AddProdukElements = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
-  const [pegawaiList, setPegawaiList] = useState<Pegawai[]>([]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+
+
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -68,7 +74,7 @@ const AddProdukElements = () => {
     if (confirmation.isConfirmed) {
       try {
         // Manually check if the file is valid
-        if (!selectedFile) {
+        if (selectedFiles.length === 0) {
           Swal.fire({
             title: "Error",
             text: "Foto produk wajib diupload.",
@@ -79,11 +85,12 @@ const AddProdukElements = () => {
           return;
         }
 
-        const result = await addProduk({
+        await addProduk({
           nama: String(data.namaProduk),
           stock: Number(data.stock),
           harga: data.harga,
-          foto: selectedFile, // Ensure the correct file is passed here
+          desc: getValues().descProduk,
+          fotos: selectedFiles, // Ensure the correct file is passed here
         });
 
         Swal.fire({
@@ -92,6 +99,8 @@ const AddProdukElements = () => {
           icon: "success",
           confirmButtonText: "OK",
         }).then(() => {
+          reset();
+          setSelectedFiles([]);
           router.push("/produk");
         });
       } catch (err: any) {
@@ -103,7 +112,6 @@ const AddProdukElements = () => {
           icon: "error",
           confirmButtonText: "OK",
         });
-        reset();
       } finally {
         setLoading(false);
       }
@@ -112,34 +120,12 @@ const AddProdukElements = () => {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    console.log(file);
-    if (file === null) return;
-    setPreviewImage(URL.createObjectURL(file));
-    setSelectedFile(file); // Store the selected file
-  };
-
-  useEffect(() => {
-    const getPegawaiData = async () => {
-      try {
-        setLoading(true);
-        const data = await fetchPegawai();
-        setPegawaiList(data);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getPegawaiData();
-  }, []);
-
   return (
     <>
       <Breadcrumb pageName="Tambah Data Produk" />
-
+      <button onClick={() => console.log("selectedFiles", selectedFiles)}>
+        CEK
+      </button>
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
         <div className="flex flex-col gap-9">
           {/* <!-- Input Fields --> */}
@@ -159,6 +145,23 @@ const AddProdukElements = () => {
                   {errors.namaProduk && (
                     <span className="text-red-500">
                       {errors.namaProduk.message}
+                    </span>
+                  )}
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Description Produk
+                  </label>
+                  <textarea
+                    rows={4}
+                    placeholder="Description Produk"
+                    {...register("descProduk")}
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                  {errors.descProduk && (
+                    <span className="text-red-500">
+                      {errors.descProduk.message}
                     </span>
                   )}
                 </div>
@@ -198,14 +201,26 @@ const AddProdukElements = () => {
                     Gambar Produk
                   </label>
                   <ImageUploader
-                    error={errors.foto?.message}
-                    onFileSelect={(file) => {
-                      setSelectedFile(file); // Kirim ke form
+                    onFileSelect={(files) => {
+                      setSelectedFiles((prev) => {
+                        const combined = [...prev];
+                        files.forEach((file) => {
+                          const isDuplicate = prev.some(
+                            (f) => f.name === file.name && f.size === file.size,
+                          );
+                          if (!isDuplicate) {
+                            combined.push(file);
+                          }
+                        });
+                        console.log("files", combined);
+                        return combined;
+                      });
                     }}
-                    />
-                    {errors.foto && (
-                      <span className="text-red-500">{errors.foto.message}</span>
-                    )}
+                    error={errors.foto?.message}
+                  />
+                  {errors.foto && (
+                    <span className="text-red-500">{errors.foto.message}</span>
+                  )}
                 </div>
 
                 <div className="flex justify-end gap-2.5">

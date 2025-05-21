@@ -9,6 +9,4 @@ export class CreateProdukDto {
   @IsNotEmpty()
   harga: number;
 
-  @IsNumber()
-  foto: string;
 }

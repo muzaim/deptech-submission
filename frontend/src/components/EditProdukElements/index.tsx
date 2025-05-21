@@ -11,11 +11,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams, useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { addProduk } from "@/app/api/produk";
 import ImageUploader from "../ImageUploader";
 
 const validationSchema = z.object({
-  stock: z.string().min(1, { message: "Stock is required" }),
+  stock: z.number().min(1, { message: "Stock is required" }),
   namaProduk: z.string().min(1, { message: "Nama Produk is required" }),
   harga: z.string().min(1, { message: "Harga is required" }),
 });
@@ -23,6 +22,7 @@ const validationSchema = z.object({
 type FormData = {
   stock: number;
   namaProduk: string;
+  descProduk: string;
   harga: number;
   foto: File | null;
 };
@@ -32,19 +32,21 @@ const EditProdukElements = () => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
     reset,
     setValue,
   } = useForm<FormData>({
     resolver: zodResolver(validationSchema),
   });
 
-  const [successMessage, setSuccessMessage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { id } = useParams();
   const [dataProduk, setDataProduk] = useState<any>(null);
+
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [existingFiles, setExistingFiles] = useState<any[]>([]);
 
   useEffect(() => {
     flatpickr(".form-datepicker", {
@@ -54,18 +56,22 @@ const EditProdukElements = () => {
 
   useEffect(() => {
     if (dataProduk) {
-      console.log('dataProduk', dataProduk);
       setValue("namaProduk", dataProduk.nama);
       setValue("harga", dataProduk.harga);
       setValue("foto", dataProduk.foto);
+      setValue("stock", Number(dataProduk.stock));
+      setValue("descProduk", dataProduk.desc);
+      setSelectedFiles(dataProduk.fotos);
+      setExistingFiles(
+        dataProduk.fotos.length > 0 &&
+          dataProduk.fotos.map((file: any) => file.id),
+      );
     }
-    // setSelectedFile(dataProduk.foto);
   }, [dataProduk, setValue]);
 
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     setError("");
-
 
     const confirmation = await Swal.fire({
       title: "Pastikan Data Sudah Benar",
@@ -76,16 +82,20 @@ const EditProdukElements = () => {
       cancelButtonText: "Batal",
     });
 
+    console.log("getValues", getValues());
+
     if (confirmation.isConfirmed) {
       try {
         const result = await editProduk(Number(id), {
           nama: String(data.namaProduk),
           stock: Number(data.stock),
           harga: String(data.harga),
-          foto: selectedFile ?? null, // Ensure the correct file is passed here
+          fotos: selectedFiles ?? null, // Ensure the correct file is passed here
+          desc: getValues().descProduk,
+          existingFileIds: existingFiles,
         });
 
-        console.log('result', result);
+        console.log("result", result);
 
         Swal.fire({
           title: "Success!",
@@ -93,6 +103,8 @@ const EditProdukElements = () => {
           icon: "success",
           confirmButtonText: "OK",
         }).then(() => {
+          reset();
+          setSelectedFiles([]);
           router.push("/produk");
         });
       } catch (err: any) {
@@ -104,19 +116,12 @@ const EditProdukElements = () => {
           icon: "error",
           confirmButtonText: "OK",
         });
-        reset();
       } finally {
         setLoading(false);
       }
     } else {
       setLoading(false);
     }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    console.log(file);
-    setSelectedFile(file); // Store the selected file
   };
 
   useEffect(() => {
@@ -138,7 +143,7 @@ const EditProdukElements = () => {
   return (
     <>
       <Breadcrumb pageName="Edit Data Produk" />
-  
+
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
         <div className="flex flex-col gap-9">
           {/* <!-- Input Fields --> */}
@@ -150,7 +155,7 @@ const EditProdukElements = () => {
                     Nama Produk
                   </label>
                   <input
-                    type="text"
+                    type="text" 
                     placeholder="Nama Produk"
                     {...register("namaProduk")}
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -158,6 +163,23 @@ const EditProdukElements = () => {
                   {errors.namaProduk && (
                     <span className="text-red-500">
                       {errors.namaProduk.message}
+                    </span>
+                  )}
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Description Produk
+                  </label>
+                  <textarea
+                    rows={4}
+                    placeholder="Description Produk"
+                    {...register("descProduk")}
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                  {errors.descProduk && (
+                    <span className="text-red-500">
+                      {errors.descProduk.message}
                     </span>
                   )}
                 </div>
@@ -197,12 +219,37 @@ const EditProdukElements = () => {
                     Gambar Produk
                   </label>
                   <ImageUploader
-                    defaultImage={dataProduk?.foto ?? null}
-                    error={errors.foto?.message}
-                    onFileSelect={(file) => {
-                      setSelectedFile(file); // update React Hook Form
+                    defaultImages={dataProduk?.fotos}
+                    onFileSelect={(files, deletedIds) => {
+                      //existingFiles (7) [13, 14, 15, 16, 17, 18, 19]
+                      console.log("deletedIds", deletedIds); // [1,2]
+                      setExistingFiles((prev) => {
+                        if (!deletedIds || deletedIds.length === 0) return prev;
+                        return prev.filter(
+                          (id) => !deletedIds.includes(id),
+                        );
+                      });
+
+                      console.log('files', files);
+
+                      setSelectedFiles((prev) => {
+                        const combined = [...prev];
+                        files.forEach((file) => {
+                          const isDuplicate = prev.some(
+                            (f) => f.name === file.name && f.size === file.size,
+                          );
+                          if (!isDuplicate) {
+                            combined.push(file);
+                          }
+                        });
+                        console.log("files", combined);
+                        return combined;
+                      });
                     }}
                   />
+                  {errors.foto && (
+                    <span className="text-red-500">{errors.foto.message}</span>
+                  )}
                 </div>
 
                 <div className="flex justify-end gap-2.5">

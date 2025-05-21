@@ -118,16 +118,16 @@ const TableProduk = () => {
               </div>
             </div>
             <div className="col-span-4 flex items-center justify-center">
-              {produk.foto && (
+              {produk.fotos.length > 0 && (
                 <Image
                   width={100}
                   height={100}
                   src={
-                    produk.foto.startsWith("http")
-                      ? produk.foto
-                      : `http://${produk.foto}`
+                    produk.fotos[0].foto.startsWith("http")
+                      ? produk.fotos[0].foto
+                      : `http://${produk.fotos[0].foto}`
                   }
-                  alt={produk.nama}
+                  alt={produk.fotos[0].id}
                   className="h-40 w-40 object-cover"
                 />
               )}

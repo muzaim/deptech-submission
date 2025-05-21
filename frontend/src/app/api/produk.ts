@@ -7,6 +7,7 @@ export type Produk = {
   stock: number;
   harga: string;
   foto: string;
+  fotos: any[];
 };
 
 export const fetchProduk = async (): Promise<Produk[]> => {
@@ -45,20 +46,24 @@ export const addProduk = async (produkData: {
   nama: string;
   stock: number;
   harga: number;
-  foto: File | null;
+  desc: string;
+  fotos: File[] | null;
 }): Promise<any> => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Membuat objek FormData
-  const formData : any = new FormData();
+  const formData: any = new FormData();
 
   // Menambahkan data ke FormData
   formData.append("nama", produkData.nama);
   formData.append("harga", produkData.harga.toString()); // Harga harus string
   formData.append("stock", produkData.stock);
+  formData.append("desc", produkData.desc);
 
-  if (produkData.foto) {
-    formData.append("foto", produkData.foto);
+  if (produkData.fotos) {
+    for (let i = 0; i < produkData.fotos.length; i++) {
+      formData.append("fotos", produkData.fotos[i]);
+    }
   }
 
   try {
@@ -84,7 +89,9 @@ export const editProduk = async (
     nama: string;
     stock: number;
     harga: string;
-    foto?: File | string | null; // Use File type for foto
+    desc: string;
+    fotos?: File[] | null; // Use File type for foto
+    existingFileIds: number[];
   },
 ): Promise<any> => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -96,16 +103,20 @@ export const editProduk = async (
   formData.append("nama", produkData.nama);
   formData.append("harga", produkData.harga);
   formData.append("stock", produkData.stock);
+  formData.append("desc", produkData.desc);
+  formData.append("existingFileIds", JSON.stringify(produkData.existingFileIds));
 
   // Append the foto field, handle both File and string case
-  if (produkData.foto instanceof File && produkData.foto !== null) {
-    formData.append("foto", produkData.foto);
-  } else {
-    formData.append("foto", produkData.foto); // If foto is a string (file name)
+  if (produkData.fotos) {
+    for (let i = 0; i < produkData.fotos.length; i++) {
+      if(produkData.fotos[i] instanceof File){
+      formData.append("fotos", produkData.fotos[i]);
+      }
+    }
   }
 
   try {
-    const response = await axios.post(`${apiUrl}/produk/${id}`, formData, {
+    const response = await axios.put(`${apiUrl}/produk/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Specify that the request contains a file
       },
