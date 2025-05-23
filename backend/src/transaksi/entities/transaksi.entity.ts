@@ -31,7 +31,10 @@ export class Transaksi {
   alamat: string;
 
   @Column()
-  kode_pos: string;
+  telp: string;
+
+  @Column()
+  email: string;
 
   @Column()
   tanggal: Date;
@@ -39,8 +42,6 @@ export class Transaksi {
   @Column()
   bukti_transfer: string;
 
-  @Column()
-  metode_pengiriman: string;
 
   @Column('decimal', { precision: 10, scale: 2, default: 0 })
   total_harga: Number;
